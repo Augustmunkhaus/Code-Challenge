@@ -1,0 +1,37 @@
+﻿@page "/"
+@using MovieSite.ApiClient
+@using MovieSite.Models
+@inject IApiClient ApiClient
+
+<PageTitle>Home</PageTitle>
+
+<h1>Popular movies</h1>
+
+@if (Movies == null)
+{
+    <p>Loading movies...</p>
+}
+else
+{
+    <ul>
+        @foreach (var movie in Movies)
+        {
+            <li>
+                <h4>@movie.Title</h4>
+                <img src="https://image.tmdb.org/t/p/w500/@movie.PosterPath" alt="@movie.Title" />
+                <p>@movie.Overview</p>
+                <p><strong>Release Date:</strong> @movie.ReleaseDate.ToShortDateString()</p>
+            </li>
+        }
+    </ul>
+
+@code {
+
+    private List<Movie> Movies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Movies = await ApiClient.GetPopularMoviesAsync();
+    }
+}
+}
