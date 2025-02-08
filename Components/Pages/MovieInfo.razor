@@ -1,0 +1,31 @@
+@page "/MovieInfo/{MovieId:int}"
+@using MovieSite.ApiClient
+@using MovieSite.Models
+@inject IApiClient ApiClient
+
+<h1>Movie Details</h1>
+
+@if (movieDetails!= null) //makes sure we are not loading the page before the api
+{ 
+    <h2>@movieDetails.Title</h2>
+    <p><strong>Overview:</strong> @movieDetails.Overview</p>
+    <p><strong>Release Year:</strong> @DateTime.Parse(movieDetails.release_date).Year</p>
+    <img src="https://image.tmdb.org/t/p/w500/@movieDetails.poster_path" alt="@movieDetails.Title" />
+    <p><strong>Vote Average:</strong> @movieDetails.Vote_average</p>
+    <p><strong>Popularity:</strong> @movieDetails.Popularity</p>
+}
+else
+{
+    <p>Loading movie details...</p>
+}
+
+@code {
+    [Parameter]
+    public int MovieId { get; set; }
+    private Movie movieDetails { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    { 
+        movieDetails = await ApiClient.GetMovieByIdAsync(MovieId); 
+    }
+}

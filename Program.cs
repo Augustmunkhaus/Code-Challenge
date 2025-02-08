@@ -1,3 +1,4 @@
+using MovieSite;
 using MovieSite.ApiClient;
 using MovieSite.Components;
 
@@ -8,6 +9,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddHttpClient<IApiClient, ApiClient>();
+builder.Services.AddScoped<IApiService, ApiService>();
 
 var app = builder.Build();
 
@@ -19,7 +21,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-builder.Configuration["MovieDb:apiKey"] = Environment.GetEnvironmentVariable("d01843eeda129ce915de3ad0cab62288");
+// Fetch API key from environment variable or appsettings.json
+var apiKey = Environment.GetEnvironmentVariable("MovieDb_ApiKey") 
+             ?? builder.Configuration["MovieDb:ApiKey"];
+
+builder.Configuration["MovieDb:ApiKey"] = apiKey;
 
 app.UseHttpsRedirection();
 

@@ -49,3 +49,20 @@ h1:focus {
 .darker-border-checkbox.form-check-input {
     border-color: #929292;
 }
+
+body .movie-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+body .movie-card {
+    width: 18%;
+    text-align: center;
+}
+
+body .movie-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}

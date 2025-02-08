@@ -1,0 +1,71 @@
+@page "/"
+@using MovieSite.Models
+@using MovieSite.ApiClient
+@inject IApiClient ApiClient
+@inject IApiService ApiService
+
+<h1> Welcome </h1>
+
+@if (MovieGenres == null)
+{
+    <p>Loading movies...</p>
+}
+else
+//displaying genres, movie count, and movies under each genre
+{ 
+        @foreach (var genre in MovieGenres)
+        { 
+            <h4>@genre.name (@MovieCounts[genre.Id] movies)</h4>
+            <button @onclick="LoadMoreMovies">Load More</button>
+            <div class="movie-row">
+                    @foreach (var movie in Movies[genre.Id].Take(5))
+                    {
+                        <div class="movie-card">
+                            <img src="https://image.tmdb.org/t/p/w500/@movie.poster_path" alt="@movie.Title" />
+                            <strong>@movie.Title</strong>
+                            <p>@DateTime.Parse(movie.release_date).Year</p>
+                            <a href="/movieinfo/@movie.MovieId">Details</a>
+                            <br/>
+                        </div>
+                    }
+            </div>   
+        }
+}
+
+@code {
+
+    public List<Genre> MovieGenres;
+    public Dictionary<int, int> MovieCounts = new();
+    public Dictionary<int, List<Movie>> Movies = new();
+    public int CurrentPage = 1;
+    
+    protected override async Task OnInitializedAsync()
+    { 
+        //custom selection of displayed genres
+        List<int> selectedGenreIds = new List<int> { 28, 35, 80, 99, 18, 27, 10749, 53};
+        MovieGenres = await ApiService.SelectedGenresAsync(selectedGenreIds);
+        
+        foreach (var genre in MovieGenres)
+        {
+            MovieCounts[genre.Id] = await ApiClient.GetMovieCountByGenreAsync(genre.Id);
+        }
+
+        foreach (var genre in MovieGenres)
+        {
+            Movies[genre.Id] = await ApiClient.GetMoviesByGenreAsync(genre.Id, CurrentPage);
+        }
+        
+    }
+    private async Task LoadMoreMovies()
+    {
+        CurrentPage++;
+        
+        foreach (var genre in MovieGenres)
+        {
+            var newMovies = await ApiClient.GetMoviesByGenreAsync(genre.Id, CurrentPage);
+            Movies[genre.Id].AddRange(newMovies);
+        }
+
+        StateHasChanged();
+    }
+}

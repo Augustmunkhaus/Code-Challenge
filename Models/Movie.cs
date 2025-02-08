@@ -1,20 +1,30 @@
+
+using System.Text.Json.Serialization;
+
 namespace MovieSite.Models;
 
 public class Movie
 {
-    public int Id { get; set; }
-    public string Title { get; set; }
+    public bool adult { get; set; }
+    public string backdrop_path { get; set; }
+    public List<int> genre_ids { get; set; } = new List<int>();
+    
+    [JsonPropertyName("Id")]
+    public int MovieId { get; set; }
+    public string original_language { get; set; }
+    public string original_title { get; set; }
     public string Overview { get; set; }
-    public string PosterPath { get; set; }
-    public  DateTime ReleaseDate { get; set; }
-    public float VoteAverage { get; set; }
-    public string BackdropPath { get; set; }
-    public string OriginalTitle { get; set; }
-    public bool Adult { get; set; }
     public double Popularity { get; set; }
+    public string poster_path { get; set; }
+    public string release_date { get; set; }
+    public string Title { get; set; }
+    public bool Video { get; set; }
+    public float Vote_average { get; set; }
+    public int Vote_count { get; set; }
 }
 
 public class MovieDbResponse
 {
     public List<Movie> Results { get; set; }
+    public int total_results { get; set; }
 }
