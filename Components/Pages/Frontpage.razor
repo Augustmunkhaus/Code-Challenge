@@ -16,16 +16,20 @@ else
         @foreach (var genre in MovieGenres)
         { 
             <h4>@genre.name (@MovieCounts[genre.Id] movies)</h4>
-            <button @onclick="LoadMoreMovies">Show All movies</button>
+            <a href="/genre/@genre.Id/@genre.name">Show All Movies</a>
             <div class="movie-row">
                     @foreach (var movie in Movies[genre.Id].Take(5))
                     {
                         <div class="movie-card">
                             <img src="https://image.tmdb.org/t/p/w500/@movie.poster_path" alt="@movie.Title" />
-                            <h5>@movie.Title</h5>
-                            <strong>@DateTime.Parse(movie.release_date).Year</strong>
-                            <div></div>
-                            <a href="/movieinfo/@movie.MovieId">Details</a>
+                            <div class="card-actions">
+                                <a href="/movieinfo/@movie.MovieId" class="details-button">Details</a>
+                                <button class="wishlist-button" @onclick="() => AddToWishlist(movie)">Add to Wishlist</button>
+                            </div>
+                            <div class="card-content">
+                                <h5>@movie.Title</h5>
+                                <strong>@DateTime.Parse(movie.release_date).Year</strong>
+                            </div>
                             <br/>
                         </div>
                     }
@@ -56,17 +60,10 @@ else
             Movies[genre.Id] = await ApiClient.GetMoviesByGenreAsync(genre.Id, CurrentPage);
         }
         
-    }
-    private async Task LoadMoreMovies()
+    } 
+    
+    private async Task AddToWishlist(Movie movie)
     {
-        CurrentPage++;
-        
-        foreach (var genre in MovieGenres)
-        {
-            var newMovies = await ApiClient.GetMoviesByGenreAsync(genre.Id, CurrentPage);
-            Movies[genre.Id].AddRange(newMovies);
-        }
-
-        StateHasChanged();
+        await ApiService.AddToWishlist(movie);
     }
   }

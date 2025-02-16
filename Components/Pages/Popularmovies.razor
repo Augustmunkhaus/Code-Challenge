@@ -2,6 +2,8 @@
 @using MovieSite.ApiClient
 @using MovieSite.Models
 @inject IApiClient ApiClient
+@inject IApiService ApiService
+
 
 <PageTitle>Home</PageTitle>
 
@@ -13,27 +15,34 @@
 }
 else
 {
-        <div class="movie-row">
+    <div class="movie-row">
         @foreach (var movie in Movies)
         {
             <div class="movie-card">
                 <img src="@($"https://image.tmdb.org/t/p/w500{movie.poster_path}")" alt="@movie.Title"/>
-                <h5>@movie.Title</h5>
-                <strong>@DateTime.Parse(movie.release_date).Year</strong>
-                <div></div>
-                <a href="/movieinfo/@movie.MovieId">Details</a>
+                <div class="card-actions">
+                    <a href="/movieinfo/@movie.MovieId" class="details-button">Details</a>
+                    <button class="wishlist-button" @onclick="() => AddToWishlist(movie)">Add to Wishlist</button>
+                </div>
+                <div class="card-content">
+                    <h5>@movie.Title</h5>
+                    <strong>@DateTime.Parse(movie.release_date).Year</strong>
+                </div>
             </div>
         }
     </div>
     
 @code {
-
     private List<Movie> Movies;
 
     protected override async Task OnInitializedAsync()
     {
         Movies = await ApiClient.GetPopularMoviesAsync();
     }
-}
-}
 
+    private async Task AddToWishlist(Movie movie)
+    {
+        await ApiService.AddToWishlist(movie);
+    }
+  }
+}

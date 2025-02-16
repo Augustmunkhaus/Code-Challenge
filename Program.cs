@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using MovieSite;
 using MovieSite.ApiClient;
 using MovieSite.Components;
@@ -10,6 +11,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddHttpClient<IApiClient, ApiClient>();
 builder.Services.AddScoped<IApiService, ApiService>();
+builder.Services.AddBlazoredLocalStorage();
 
 var app = builder.Build();
 

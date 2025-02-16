@@ -1,1 +1,41 @@
 @page "/Wishlist"
+@using MovieSite.Models
+@using Blazored.LocalStorage
+@inject ILocalStorageService localStorage
+
+<h1>My Wishlist </h1>
+
+@if (wishlistMovies.Any())
+{
+    <div class="movie-row">
+        @foreach (var movie in wishlistMovies)
+        {
+            <div class="movie-card">
+                <img src="@($"https://image.tmdb.org/t/p/w500{movie.poster_path}")" alt="@movie.Title" />
+                <h5>@movie.Title</h5>
+                <div></div>
+                <button @onclick="() => RemoveFromWishlist(movie.MovieId)">Remove</button>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Your wishlist is empty.</p>
+}
+
+@code {
+    private List<Movie> wishlistMovies = new();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        // Localstorage for storing and getting the users wishlist
+        wishlistMovies = await localStorage.GetItemAsync<List<Movie>>("wishlist") ?? new List<Movie>();
+    }
+    
+    private async Task RemoveFromWishlist(int movieId)
+    {
+        wishlistMovies = wishlistMovies.Where(m => m.MovieId != movieId).ToList();
+        await localStorage.SetItemAsync("wishlist", wishlistMovies);
+    }
+}
