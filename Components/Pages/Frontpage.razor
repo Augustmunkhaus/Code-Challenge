@@ -16,14 +16,15 @@ else
         @foreach (var genre in MovieGenres)
         { 
             <h4>@genre.name (@MovieCounts[genre.Id] movies)</h4>
-            <button @onclick="LoadMoreMovies">Load More</button>
+            <button @onclick="LoadMoreMovies">Show All movies</button>
             <div class="movie-row">
                     @foreach (var movie in Movies[genre.Id].Take(5))
                     {
                         <div class="movie-card">
                             <img src="https://image.tmdb.org/t/p/w500/@movie.poster_path" alt="@movie.Title" />
-                            <strong>@movie.Title</strong>
-                            <p>@DateTime.Parse(movie.release_date).Year</p>
+                            <h5>@movie.Title</h5>
+                            <strong>@DateTime.Parse(movie.release_date).Year</strong>
+                            <div></div>
                             <a href="/movieinfo/@movie.MovieId">Details</a>
                             <br/>
                         </div>
@@ -68,4 +69,4 @@ else
 
         StateHasChanged();
     }
-}
+  }

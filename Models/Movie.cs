@@ -21,7 +21,11 @@ public class Movie
     public bool Video { get; set; }
     public float Vote_average { get; set; }
     public int Vote_count { get; set; }
+    
+    public List<Genre> Genres { get; set; }
+    
 }
+
 
 public class MovieDbResponse
 {

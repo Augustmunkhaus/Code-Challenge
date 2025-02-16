@@ -17,9 +17,11 @@ else
         @foreach (var movie in Movies)
         {
             <div class="movie-card">
-                <h5>@movie.Title</h5>
                 <img src="@($"https://image.tmdb.org/t/p/w500{movie.poster_path}")" alt="@movie.Title"/>
+                <h5>@movie.Title</h5>
                 <strong>@DateTime.Parse(movie.release_date).Year</strong>
+                <div></div>
+                <a href="/movieinfo/@movie.MovieId">Details</a>
             </div>
         }
     </div>

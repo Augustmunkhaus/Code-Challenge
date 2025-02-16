@@ -21,5 +21,4 @@ public class ApiService : IApiService
         return filteredGenres;
     }
     
-    
 }

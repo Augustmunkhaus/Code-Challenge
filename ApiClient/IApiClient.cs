@@ -12,4 +12,8 @@ public interface IApiClient
     Task<List<Movie>> GetMoviesByGenreAsync(int genreId, int page = 1);
 
     Task<Movie> GetMovieByIdAsync(int Id);
+
+    Task<List<Genre>> GetGenresAsync();
+
+    Task<MovieCredits> GetMovieCreditsAsync(int movieId);
 }

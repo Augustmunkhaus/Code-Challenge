@@ -1,3 +1,4 @@
+
 using MovieSite.Models;
 
 namespace MovieSite.ApiClient;
@@ -61,5 +62,24 @@ public class ApiClient : IApiClient
 
         return response;
     }
+    
+    public async Task<List<Genre>> GetGenresAsync()
+    {
+        var apiKey = _configuration["MovieDb:ApiKey"];
+        var response = await _HttpClient.GetFromJsonAsync<GenreDbResponse>(
+            $"https://api.themoviedb.org/3/genre/movie/list?api_key={apiKey}&language=en-US");
+        return response?.Genres ?? new List<Genre>();
+        
+    }
+    
+    public async Task<MovieCredits> GetMovieCreditsAsync(int movieId)
+    {
+        var apiKey = _configuration["MovieDb:ApiKey"];
+        var response = await _HttpClient.GetFromJsonAsync<MovieCredits>(
+            $"https://api.themoviedb.org/3/movie/{movieId}/credits?api_key={apiKey}");
+    
+        return response;
+    }
+    
 }
     

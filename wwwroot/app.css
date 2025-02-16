@@ -66,3 +66,55 @@ body .movie-card img {
     height: auto;
     border-radius: 5px;
 }
+
+/* Background image for body */
+.MovieInfo body {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Styling text */
+ .MovieInfo h2 {
+    position: relative;
+    font-weight: bold;
+    color: white; /* White text */
+    text-shadow:
+            2px 2px 0px black, /* Outer shadow */
+            -2px -2px 0px black, /* Outer shadow */
+            2px -2px 0px black,
+            -2px 2px 0px black;
+}
+
+.MovieInfo p {
+    position: relative;
+    font-weight: bold;
+    color: white; /* White text */
+    text-shadow:
+            2px 2px 0px black, /* Outer shadow */
+            -2px -2px 0px black, /* Outer shadow */
+            2px -2px 0px black,
+            -2px 2px 0px black;
+}
+
+.MovieInfo ul {
+    padding-left: 0; /* Removes default list indent */
+    list-style-type: none; /* Removes default bullet points */
+}
+
+.MovieInfo span {
+    font-weight: normal; /* Change the weight to make sure it's styled separately */
+    color: white;
+    text-shadow:
+            2px 2px 0px black,
+            -2px -2px 0px black,
+            2px -2px 0px black,
+            -2px 2px 0px black;
+    margin-bottom: 5px; /* Adds space between list items */
+}
+
+.MovieInfo img {
+    float: right;
+    margin-left: 20px;
+}
