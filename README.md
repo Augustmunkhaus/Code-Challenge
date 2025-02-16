@@ -1,22 +1,23 @@
-MovieSite Blazor Web App
+# MovieSite Blazor Web App
 
-Overview
+## Overview
+A Blazor Web Application that displays movie information using The Movie Database (TMDb) API.
 
-This is a Blazor Web App that displays movie information using The Movie Database (TMDb) API.
+## Requirements
+- **.NET 8.0** or later ([Download here](https://dotnet.microsoft.com/download))
 
-Requirements
+## Setup
+### 1️⃣ Clone the Repository
+```sh
+git clone https://github.com/yourusername/MovieSite.git
 
-.NET 8.0 or later
+```
 
-Setup
-
-1. Clone the Repository
-
-git clone https://github.com/Augustmunkhaus/Code-Challenge
-
-2. Run the Application
-
+### 2️⃣ Run the Application
+```sh
 dotnet run
+```
 
-Then, open  http://localhost:5163 (the specified port) in your browser.
+🔗 Open **http://localhost:5163 (or the specified port) in your browser.
+
 
