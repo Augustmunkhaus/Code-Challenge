@@ -9,7 +9,7 @@ A Blazor Web Application that displays movie information using The Movie Databas
 ## Setup
 ### 1️⃣ Clone the Repository
 ```sh
-git clone https://github.com/yourusername/MovieSite.git
+git clone https://github.com/yAugustMunkhaus/MovieSite.git
 
 ```
 
